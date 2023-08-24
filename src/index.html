@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTCPlayer</title>
+    <style>
+      html {
+        font-family: Arial;
+      }
+      h3 {
+        color: #888;
+        margin-bottom: 10px;
+      }
+      #playUrl {
+        width: 500px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 14px;
+      }
+      #playBtn {
+        background-color: #FFF;
+        color: black;
+        border: solid #ccc 1px;
+        font-size: 14px;
+        padding: 10px;
+        width: 100px;
+        cursor: pointer;
+      }
+      #playBtn:hover {
+        background-color: #f1f1f1;
+      }
+      video {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>URL</h3>
+    <input id="playUrl" value="https://127.0.0.1:8443/live/whep">
+    <input type="button" id="playBtn" value="Play">
+    <br>
+    <video controls>
+    <script type="text/javascript" >
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      const configurationChangeHandler = function(url_param) {
+        return (e) => {
+          urlParams.set(url_param, e.target.value)
+          history.pushState({},'','?'+urlParams.toString());
+        }
+      }
+
+      const playUrlInput = document.getElementById('playUrl');
+      const playUrl = (urlParams.get('playUrl') || playUrlInput.value);
+      playUrlInput.value = playUrl;
+      playUrlInput.addEventListener('input', configurationChangeHandler('playUrl'));
+
+      const video = document.querySelector('video');
+
+      document.addEventListener("DOMContentLoaded", function(event) { 
+
+        document.getElementById("playBtn").addEventListener("click", function () {
+          const player = new WebRTCPlayer({
+            video: video,
+            type: 'whep',
+            statsTypeFilter: '^candidate-*|^inbound-rtp'
+          });
+          player.load(new URL(playUrl));
+        });
+      });
+    </script>
+  </body>
+</html>
