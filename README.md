@@ -6,7 +6,7 @@ WebRTC Player library is a wrapper over [Media Server independent WebRTC player]
 
 ### Add library to HTML
 ```html
-<script defer="defer" src="webrtc-player-lib-0.12.0.min.js"></script>
+<script defer="defer" src="webrtc-player-lib-0.13.0.min.js"></script>
 ```
 
 ### Usage
@@ -25,7 +25,7 @@ player.load(new URL('https://127.0.0.1:8443/live/whep'));
 <!DOCTYPE html>
 <html>
   <head>
-    <script defer="defer" src="webrtc-player-lib-0.12.0.min.js"></script>
+    <script defer="defer" src="webrtc-player-lib-0.13.0.min.js"></script>
   </head>
   <body>
     <script type="text/javascript">
